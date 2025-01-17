@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,10 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model FormData {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  question  String
-  answer    String
-
-  @@map("form_data")
+  id       String   @id @default(uuid()) // UUID for unique identifier
+  question String   @unique             // Unique constraint for question
+  answer   String
+  queries  Query[]
 }
+
+model Query {
+  id          String   @id @default(uuid()) // UUID for unique identifier
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  status      String   @default("OPEN") // Values: OPEN or RESOLVED
+  formDataId  String                      // Foreign key to FormData
+  formData    FormData @relation(fields: [formDataId], references: [id])
+}
+
+
