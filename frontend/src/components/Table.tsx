@@ -1,20 +1,20 @@
 // src/components/Table.tsx
 import React, { useEffect, useState } from 'react';
-import { getFormData } from '../api/api.ts'; // API to fetch form data
-import { IFormData, IQuery } from '../types/index.ts'; // Types for form data and query
-import QueryRow from './QueryRow.tsx'; // Component for each row
-import QueryModal from './QueryModal.tsx'; // Modal for creating queries
+import { getFormData } from '../api/api.ts';
+import { IFormData, IQuery } from '../types/index.ts';
+import QueryRow from './QueryRow.tsx';
+import QueryModal from './QueryModal.tsx';
 
 const Table: React.FC = () => {
   const [formData, setFormData] = useState<IFormData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFormDataId, setSelectedFormDataId] = useState<string | null>(null);
+  const [selectedFormData, setSelectedFormData] = useState<IFormData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getFormData();
-        setFormData(response.formData); // Set form data from backend
+        setFormData(response.formData);
       } catch (err) {
         console.error('Error fetching form data:', err);
       }
@@ -22,29 +22,29 @@ const Table: React.FC = () => {
     fetchData();
   }, []);
 
-  const openModal = (formDataId: string) => {
-    setSelectedFormDataId(formDataId); // Set the ID for the selected FormData
-    setIsModalOpen(true); // Open the modal
+  const openModal = (formData: IFormData) => {
+    setSelectedFormData(formData); // Set the selected FormData object
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedFormDataId(null); // Reset formDataId when closing the modal
+    setSelectedFormData(null);
   };
 
-  // When the query is created, update the frontend state immediately
   const handleQueryCreated = (newQuery: IQuery) => {
     setFormData((prevData) =>
       prevData.map((item) =>
-        item.id === selectedFormDataId
-          ? { ...item, query: newQuery } // Add the new query to the selected FormData row
+        item.id === selectedFormData?.id
+          ? { ...item, query: newQuery }
           : item
       )
     );
+    closeModal();
   };
 
   return (
-    <div>
+    <div className="table-container">
       <table>
         <thead>
           <tr>
@@ -59,18 +59,21 @@ const Table: React.FC = () => {
               key={item.id}
               data={item}
               openModal={openModal}
-              setQueries={setFormData} // Pass setQueries function to QueryRow
+              setQueries={setFormData}
             />
           ))}
         </tbody>
       </table>
 
-      <QueryModal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        formDataId={selectedFormDataId || ''}
-        onQueryCreated={handleQueryCreated} // Pass the callback to update the frontend state
-      />
+      {selectedFormData && (
+        <QueryModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          formDataId={selectedFormData.id}
+          formDataTitle={selectedFormData.question} // Pass the form data title
+          onQueryCreated={handleQueryCreated}
+        />
+      )}
     </div>
   );
 };

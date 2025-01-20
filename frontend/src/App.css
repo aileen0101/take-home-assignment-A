@@ -1,38 +1,154 @@
-.App {
+/* src/styles.css */
+
+/* Basic styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color:#F2F2F2;  /* Very light cyan for the main background */
+  color: #293241;  /* Dark charcoal for text, ensures good readability */
+  padding: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  color: #3d5a80;  /* Deep blue for main headings */
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Table container styling */
+.table-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border: 1.5px solid #3d5a80;  /* Deep blue for internal table border */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #3d5a80;  /* Deep blue for table headers */
+  color: #ffffff;
+}
+
+td {
+  background-color: #F2F2F2;  /* White for table cells for maximum contrast */
+  border-bottom: 1.5px solid #3d5a80;  /* Light blue borders */
+
+}
+
+tr:hover {
+  background-color: #98c1d9;  /* Light blue on hover for rows */
+  cursor: pointer;
+}
+
+/* Button styling */
+button {
+  background-color: #3d5a80;  
   color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+button:hover {
+  background-color: #293241;  /* Deep blue on hover */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Button styles inside modal */
+.submit-btn, .cancel-btn {
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #218838; /* Darker green for submit button */
+}
+
+.cancel-btn:hover {
+  background-color: #1c1f25; /* Darker shade of dark charcoal for hover */
+}
+
+/* Modal and Textarea Styling */
+.modal-content {
+  background-color: #ffffff;  /* White for modal content to ensure focus */
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  margin: auto;
+}
+
+.textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd; /* Light grey border for better definition */
+  margin-bottom: 10px;
+  font-size: 14px;
+  background-color: #ffffff; /* Change background color to white */
+  color: #293241; /* Dark charcoal for text to ensure readability */
+}
+
+
+button.submit-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button.cancel-btn {
+  background-color: #3d5a80;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Hover effects for modal buttons */
+.submit-btn, .cancel-btn, .delete-btn {
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for delete button */
+.delete-btn {
+  background-color: #dc3545;  /* Orange-red for delete button */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333; /* Darker red for the delete button on hover */
 }

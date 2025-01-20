@@ -20,8 +20,8 @@ export const updateQueryStatus = async (queryId: string, statusData: { status: s
   return response.data;
 };
 
-export const deleteQuery = async (id: string) => {
-  const response = await axios.delete(`${API_URL}/queries/${id}`);
+export const deleteQuery = async (queryId: string) => {
+  const response = await axios.delete(`${API_URL}/queries/${queryId}`);
   return response.data;
 };
 
