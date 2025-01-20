@@ -1,4 +1,33 @@
 // src/components/QueryModal.tsx
+
+/**
+ * QueryModal Component
+ * 
+ * This component displays a modal dialog for creating a new query.
+ * 
+ * Features:
+ * - Allows users to input a description for the query.
+ * - Automatically generates a title for the query based on the associated form data's title.
+ * - Validates the input to ensure the description is not empty.
+ * - Displays an error message if the description is missing.
+ * - Submits the new query to the backend and updates the parent component's state upon successful creation.
+ * 
+ * Props:
+ * - `isOpen` (boolean): Determines if the modal is open or closed.
+ * - `onClose` (function): Callback to close the modal.
+ * - `formDataId` (string): The ID of the form data for which the query is being created.
+ * - `formDataTitle` (string): The title of the form data, used to generate the query title.
+ * - `onQueryCreated` (function): Callback to update the parent component's state with the newly created query.
+ * 
+ * Dependencies:
+ * - React Modal library for displaying the modal.
+ * - API function `createQuery` for handling query creation.
+ * 
+ * Validation:
+ * - Ensures the query description is provided by the user.
+ * - Displays an error message (`"Must submit query description"`) if validation fails.
+ */
+
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { createQuery } from '../api/api.ts';

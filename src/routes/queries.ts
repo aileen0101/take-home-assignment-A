@@ -1,3 +1,34 @@
+/**
+ * Query Routes
+ * 
+ * This module defines the routes for managing queries in the Query Management Application.
+ * 
+ * Features:
+ * - **Create a Query**: Allows creating a new query for a specific form data entry.
+ * - **Update Query Status**: Enables updating the status of a query (e.g., resolving it).
+ * - **Delete a Query**: Provides functionality to delete a query by its ID.
+ * 
+ * Routes:
+ * 1. **POST /queries**: Create a new query for a specific form data entry.
+ * 2. **PATCH /queries/:id**: Update the status of an existing query (OPEN or RESOLVED).
+ * 3. **DELETE /queries/:id**: Delete a query by its ID.
+ * 
+ * Dependencies:
+ * - **Prisma**: Used for database interactions (creating, updating, and deleting queries).
+ * - **Fastify**: Framework for defining and managing routes.
+ * - **ApiError**: Custom error handling utility.
+ * 
+ * Validation:
+ * - Ensures that the associated form data exists before creating a query.
+ * - Verifies that a query exists before updating or deleting it.
+ * - Validates the query status (must be "OPEN" or "RESOLVED") before updating.
+ * 
+ * Error Handling:
+ * - Returns `404 Not Found` if the form data or query does not exist.
+ * - Returns `400 Bad Request` for invalid statuses or missing required fields.
+ * - Returns `500 Internal Server Error` for unexpected issues during database operations.
+ */
+
 import { FastifyInstance } from 'fastify';
 import prisma from '../db/db_client';
 import { ApiError } from '../errors';

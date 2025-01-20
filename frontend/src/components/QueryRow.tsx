@@ -1,3 +1,38 @@
+/**
+ * QueryRow Component
+ * 
+ * This component represents a single row in the table, displaying information about a form data entry
+ * and its associated query (if one exists).
+ * 
+ * Features:
+ * - Displays the question and answer from the form data.
+ * - Shows the query status (OPEN or RESOLVED) with appropriate visual cues.
+ * - Allows the user to:
+ *   - Add a new query if none exists.
+ *   - View query details by opening a modal.
+ *   - Resolve an open query.
+ *   - Delete an existing query.
+ * - Provides hover effects and smooth transitions for enhanced user experience.
+ * 
+ * State Management:
+ * - `isDetailsModalOpen` (boolean): Tracks whether the query details modal is open or closed.
+ * 
+ * Props:
+ * - `data` (IFormData): The form data entry for the current row, including its associated query.
+ * - `openModal` (function): Callback to open the query creation modal for this form data entry.
+ * - `setQueries` (function): Callback to update the parent component's state when a query is resolved or deleted.
+ * 
+ * Event Handlers:
+ * - `openQueryDetails`: Opens the query details modal for the current query.
+ * - `closeQueryDetails`: Closes the query details modal.
+ * - `handleResolve`: Marks the current query as resolved, updates the backend, and reflects changes in the parent component.
+ * - `handleDelete`: Deletes the current query, updates the backend, and reflects changes in the parent component.
+ * 
+ * Dependencies:
+ * - `QueryDetailsModal`: A modal component for viewing, resolving, and deleting queries.
+ * - API functions `updateQueryStatus` and `deleteQuery` for interacting with the backend.
+ */
+
 import React, { useState } from 'react';
 import { IFormData, IQuery } from '../types/index.ts';
 import { updateQueryStatus, deleteQuery } from '../api/api.ts';

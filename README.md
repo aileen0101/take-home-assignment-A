@@ -358,6 +358,46 @@ To delete a query: DELETE /queries/:id
 
 # **Instructions on How to Set Up Backend and Frontend**
 
+## **Description of the Application**
+
+### **Purpose**
+The **Query Management Application** is a full-stack solution designed to streamline the management of queries in the context of Electronic Data Capture (EDC) systems. It enables users to create, view, update, and delete queries associated with form data entries. The application helps identify incorrect data entries, allowing for efficient communication and resolution of issues during clinical trials or data-intensive operations.
+
+---
+
+### **Uses**
+- **Data Validation**: Helps users flag, document, and track issues in form data entries.
+- **Query Resolution**: Simplifies the process of resolving data inconsistencies by providing tools for resolving queries directly within the application.
+- **Efficient Collaboration**: Facilitates communication between data managers and other stakeholders to ensure high-quality data.
+
+---
+
+### **Assumptions**
+1. **One-to-One Relationship**: 
+   - Each form data entry is assumed to have a maximum of one associated query. This decision simplifies the user interface and backend implementation but may not reflect use cases requiring multiple queries per form data.
+2. **User Roles and Permissions**: 
+   - The application assumes a single level of user interaction. There are no role-based access controls (e.g., admin vs. editor).
+3. **Static Data Model**: 
+   - The schema is predefined and does not allow users to add or modify form data fields dynamically.
+
+---
+
+### **Limitations**
+1. **No Authentication or Authorization**: 
+   - The application does not include user authentication or access controls, which may be necessary for real-world applications involving sensitive data.
+2. **Limited Query Relationships**: 
+   - As mentioned, the one-to-one relationship between form data and queries may not accommodate complex scenarios requiring multiple queries for a single form data entry.
+3. **Frontend and Backend Hosted Locally**: 
+   - Currently, the application is intended to run on local environments. It is not configured for deployment or accessible over the internet.
+
+---
+
+### **Future Improvements**
+To address these limitations and assumptions, future versions of the application can include:
+- Support for **one-to-many relationships** between form data and queries.
+- Adding **user authentication and role-based access controls**.
+- Configuring the application for **cloud deployment** (e.g., using Heroku, AWS, or Vercel).
+---
 
 ## **Setting up the Backend (API)**
 

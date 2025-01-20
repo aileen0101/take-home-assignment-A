@@ -1,3 +1,30 @@
+
+/**
+ * FormData Routes
+ * 
+ * This module defines the route for fetching all form data and their associated queries.
+ * 
+ * Features:
+ * - Fetches all form data entries from the database.
+ * - Includes the related query (if any) for each form data entry.
+ * - Formats the data to match the `ICountedFormData` interface.
+ * 
+ * Route:
+ * - **GET /form-data**: Fetches all form data entries, including their associated queries.
+ * 
+ * Dependencies:
+ * - **Prisma**: Used for database interactions to fetch form data and query relations.
+ * - **Fastify**: Framework for defining and managing the route.
+ * - **ApiError**: Custom error handling utility to handle unexpected failures.
+ * 
+ * Validation:
+ * - Ensures the `query` relation is included for each form data entry.
+ * - Handles cases where no query exists by setting `query` to `null`.
+ * 
+ * Error Handling:
+ * - Returns `500 Internal Server Error` if there is a failure during data fetching or processing.
+ */
+
 import { FastifyInstance } from 'fastify';
 import prisma from '../db/db_client';
 import { ApiError } from '../errors';
