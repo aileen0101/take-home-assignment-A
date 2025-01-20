@@ -127,10 +127,7 @@ Some helpful links:
 We hope you have fun with the assignment and we look forward to hearing from you!
 
 -------------------------------------------------------------------------------------------------------
-### API Documentation
-API Documentation
-
-Base URL
+# API Documentation
 
 Base URL: http://localhost:8080
 
@@ -384,24 +381,22 @@ To update a query's status: PATCH /queries/:id
 To delete a query: DELETE /queries/:id
 
 
-### Instructions on how to set up backend and frontend
+# Instructions on how to set up backend and frontend
 
 ## Setting up the Backend (API)
 
-Prerequisites
-
-Make sure you have Docker and Docker Compose installed.
+Prerequisites: Make sure you have Docker and Docker Compose installed.
 
 You need Node.js and npm to be installed on your machine.
 
-# 1. Clone the Repository (if not already done)
+### 1. Clone the Repository (if not already done)
 
 If you haven’t already, clone the repository to your local machine:
 
 git clone https://github.com/aileen0101/take-home-assignment-A.git
 cd take-home-assignment-A
 
-# 2. Build Docker Containers
+### 2. Build Docker Containers
 
 Build the Docker containers by running the following command in the root of the backend project:
 
@@ -415,19 +410,19 @@ This will run both the backend API and PostgreSQL.
 
 You should now have both services running, with PostgreSQL running on port 5432 and the backend running on port 8080.
 
-# 3. Running Migrations
+### 3. Running Migrations
 
 Run the Prisma migrations to create the database tables for your backend API:
 
 docker exec -it vial-backend-api npx prisma migrate deploy
 
-# 4. Seeding the Database
+### 4. Seeding the Database
 
 To seed the database with initial data (form data and queries), run:
 
 docker exec -it vial-backend-api npx prisma db seed
 
-# 5. Test the Backend API (OPTIONAL)
+### 5. Test the Backend API (OPTIONAL)
 
 Your backend API should now be running and listening on port 8080. You can test the endpoints using curl or Postman. Some example API tests:
 
@@ -463,7 +458,7 @@ curl --location --request DELETE 'http://localhost:8080/queries/queryId'
 
 ## Setting up the Frontend (React App)
 
-# 1. Install Dependencies
+### 1. Install Dependencies
 
 Navigate to the frontend directory in your project.
 
@@ -475,7 +470,7 @@ If you encounter issues with dependencies, you can install them manually:
 
 npm install axios react-modal
 
-# 2. Start the Frontend Application
+### 2. Start the Frontend Application
 
 To start the frontend, run:
 
@@ -489,7 +484,7 @@ The app should now be running at http://localhost:3000.
 
 ## Frontend Features 
 
-# 1. Display Form Data and Associated Queries
+### 1. Display Form Data and Associated Queries
 
 Form data is fetched from the backend API and displayed in a table format.
 
@@ -497,19 +492,19 @@ If no query exists, a button will allow the user to create a new query for that 
 
 If a query exists, the query is shown with its status, and the user can click to view the details.
 
-# 2. Create Query
+### 2. Create Query
 
 Clicking the “+ Add Query” button opens a modal to create a new query.
 
 The new query is immediately updated on the frontend without requiring a reload.
 
-# 3. Resolve Query
+### 3. Resolve Query
 
 If the query is unresolved (OPEN), a “Resolve Query” button appears.
 
 Clicking Resolve updates the query's status to RESOLVED on both the frontend and backend.
 
-# 4. View Query Details
+### 4. View Query Details
 
 Clicking on an existing query opens a modal with the query details (title, status, description, etc.).
 
@@ -517,7 +512,7 @@ If the query is OPEN, the user can click “Resolve Query” to resolve it.
 
 If the query is RESOLVED, it will show the resolved status and details.
 
-# 5. Delete Query
+### 5. Delete Query
 
 If the query exists, a “Delete Query” button is shown in the query details modal.
 
@@ -527,19 +522,19 @@ Clicking Delete removes the query from the backend and updates the frontend imme
 
 If you run into any issues while running the backend or frontend, here are some common solutions:
 
-# Backend Database Not Connecting:
+### Backend Database Not Connecting:
 
 Check if the Docker container for PostgreSQL is running properly.
 
 Ensure the DATABASE_URL in the .env file is correct.
 
-# API Call Errors:
+### API Call Errors:
 
 Check if the backend API server is running and accessible at http://localhost:8080.
 
 Make sure you have run the Prisma migrations to set up the database schema (npx prisma migrate deploy).
 
-# Frontend Issues:
+### Frontend Issues:
 
 Ensure all dependencies are correctly installed (npm install).
 
