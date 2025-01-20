@@ -126,207 +126,99 @@ Some helpful links:
 
 We hope you have fun with the assignment and we look forward to hearing from you!
 
--------------------------------------------------------------------------------------------------------
-# API Documentation
+---
 
-Base URL: http://localhost:8080
+# **API Documentation**
 
-## 1. GET /form-data
+### **Base URL**: `http://localhost:8080`
 
+---
+
+## **1. GET /form-data**
+
+### **Description**
 Fetches all the form data entries, including associated queries.
 
-Request
+### **Request**
+- **Method**: GET  
+- **URL**: `/form-data`  
+- **Headers**:  
+  ```json
+  {
+    "Content-Type": "application/json"
+  }
+  ```
 
-Method: GET
-
-URL: /form-data
-
-Headers:
-
-Content-Type: application/json
-
-Response
-
-Status: 200 OK
-
-Body:
-
-{
-  "total": 10,
-  "formData": [
-    {
-      "id": "uuid",
-      "question": "Question text",
-      "answer": "Answer text",
-      "query": {
+### **Response**
+- **Status**: 200 OK  
+- **Body**:
+  ```json
+  {
+    "total": 10,
+    "formData": [
+      {
         "id": "uuid",
-        "title": "Query title",
-        "description": "Query description",
-        "status": "OPEN",
-        "createdAt": "2025-01-01T12:00:00Z",
-        "updatedAt": "2025-01-02T12:00:00Z",
-        "formDataId": "uuid"
+        "question": "Question text",
+        "answer": "Answer text",
+        "query": {
+          "id": "uuid",
+          "title": "Query title",
+          "description": "Query description",
+          "status": "OPEN",
+          "createdAt": "2025-01-01T12:00:00Z",
+          "updatedAt": "2025-01-02T12:00:00Z",
+          "formDataId": "uuid"
+        }
       }
-    }
-  ]
-}
+    ]
+  }
+  ```
 
+### **Fields**
+- **`total`**: Total number of `FormData` entries.
+- **`formData`**: Array of `FormData` entries. Each entry includes:
+  - **`id`**: Unique identifier for the form data.
+  - **`question`**: Question text associated with the form data.
+  - **`answer`**: Answer text associated with the form data.
+  - **`query`**: Associated query object (if any), including:
+    - **`id`**: Query ID.
+    - **`title`**: Query title.
+    - **`description`**: Query description.
+    - **`status`**: Query status (`OPEN` or `RESOLVED`).
+    - **`createdAt`**: Creation timestamp.
+    - **`updatedAt`**: Last updated timestamp.
+    - **`formDataId`**: Associated form data ID.
 
-Fields:
+---
 
-total: The total number of FormData entries.
+## **2. POST /queries**
 
-formData: An array of FormData entries. Each entry contains:
-
-id: The unique identifier of the form data.
-
-question: The question text associated with the form data.
-
-answer: The answer text associated with the form data.
-
-query: The associated query object (if any), including its status and details. null if no query exists.
-
-## 2. POST /queries
-
+### **Description**
 Creates a new query for a specific form data entry.
 
-Request
+### **Request**
+- **Method**: POST  
+- **URL**: `/queries`  
+- **Headers**:  
+  ```json
+  {
+    "Content-Type": "application/json"
+  }
+  ```
+- **Body**:  
+  ```json
+  {
+    "title": "Query Title",
+    "description": "Query Description",
+    "formDataId": "uuid"
+  }
+  ```
 
-Method: POST
-
-URL: /queries
-
-Headers:
-
-Content-Type: application/json
-
-Body:
-
-{
-  "title": "Query Title",
-  "description": "Query Description",
-  "formDataId": "uuid"
-}
-
-
-Fields:
-
-title: The title of the query.
-
-description: A detailed description of the query.
-
-formDataId: The unique ID of the form data to associate with the query.
-
-Response
-
-Status: 201 Created
-
-Body:
-
-{
-  "id": "uuid",
-  "title": "Query Title",
-  "description": "Query Description",
-  "status": "OPEN",
-  "createdAt": "2025-01-01T12:00:00Z",
-  "updatedAt": "2025-01-01T12:00:00Z",
-  "formDataId": "uuid"
-}
-
-
-Fields:
-
-id: The unique identifier of the created query.
-
-title: The title of the query.
-
-description: The description of the query.
-
-status: The status of the query (OPEN by default).
-
-createdAt: The timestamp when the query was created.
-
-updatedAt: The timestamp when the query was last updated.
-
-formDataId: The ID of the associated form data.
-
-## 3. PATCH /queries/:id
-
-Updates the status of an existing query to RESOLVED.
-
-Request
-
-Method: PATCH
-
-URL: /queries/:id
-
-Headers:
-
-Content-Type: application/json
-
-URL Parameters:
-
-id: The unique ID of the query to update.
-
-Body:
-
-{
-  "status": "RESOLVED"
-}
-
-
-Fields:
-
-status: The new status of the query (OPEN or RESOLVED).
-
-Response
-
-Status: 200 OK
-
-Body:
-
-{
-  "id": "uuid",
-  "title": "Query Title",
-  "description": "Query Description",
-  "status": "RESOLVED",
-  "createdAt": "2025-01-01T12:00:00Z",
-  "updatedAt": "2025-01-02T12:00:00Z",
-  "formDataId": "uuid"
-}
-
-
-Fields:
-
-Same as the response from POST /queries, but with the updated status.
-
-## 4. DELETE /queries/:id
-
-Deletes a query by its ID.
-
-Request
-
-Method: DELETE
-
-URL: /queries/:id
-
-Headers:
-
-Content-Type: application/json
-
-URL Parameters:
-
-id: The unique ID of the query to delete.
-
-Response
-
-Status: 200 OK
-
-Body:
-
-{
-  "message": "Query deleted successfully",
-  "deletedQuery": {
+### **Response**
+- **Status**: 201 Created  
+- **Body**:
+  ```json
+  {
     "id": "uuid",
     "title": "Query Title",
     "description": "Query Description",
@@ -335,33 +227,115 @@ Body:
     "updatedAt": "2025-01-01T12:00:00Z",
     "formDataId": "uuid"
   }
-}
+  ```
 
+### **Fields**
+- **Request Body**:
+  - **`title`**: Query title.
+  - **`description`**: Query description.
+  - **`formDataId`**: Associated form data ID.
+- **Response Body**:
+  - **`id`**: Query ID.
+  - **`title`**: Query title.
+  - **`description`**: Query description.
+  - **`status`**: Query status (`OPEN` by default).
+  - **`createdAt`**: Creation timestamp.
+  - **`updatedAt`**: Last updated timestamp.
+  - **`formDataId`**: Associated form data ID.
 
-Fields:
+---
 
-message: A confirmation message that the query has been successfully deleted.
+## **3. PATCH /queries/:id**
 
-deletedQuery: The details of the deleted query.
+### **Description**
+Updates the status of an existing query (e.g., resolve a query).
 
-Error Responses
+### **Request**
+- **Method**: PATCH  
+- **URL**: `/queries/:id`  
+- **Headers**:  
+  ```json
+  {
+    "Content-Type": "application/json"
+  }
+  ```
+- **Body**:  
+  ```json
+  {
+    "status": "RESOLVED"
+  }
+  ```
 
-If an error occurs, the backend will return a JSON response with an appropriate error message:
+### **Response**
+- **Status**: 200 OK  
+- **Body**:
+  ```json
+  {
+    "id": "uuid",
+    "title": "Query Title",
+    "description": "Query Description",
+    "status": "RESOLVED",
+    "createdAt": "2025-01-01T12:00:00Z",
+    "updatedAt": "2025-01-02T12:00:00Z",
+    "formDataId": "uuid"
+  }
+  ```
 
-Example Error Response
+---
 
+## **4. DELETE /queries/:id**
+
+### **Description**
+Deletes a query by its ID.
+
+### **Request**
+- **Method**: DELETE  
+- **URL**: `/queries/:id`  
+- **Headers**:  
+  ```json
+  {
+    "Content-Type": "application/json"
+  }
+  ```
+
+### **Response**
+- **Status**: 200 OK  
+- **Body**:
+  ```json
+  {
+    "message": "Query deleted successfully",
+    "deletedQuery": {
+      "id": "uuid",
+      "title": "Query Title",
+      "description": "Query Description",
+      "status": "OPEN",
+      "createdAt": "2025-01-01T12:00:00Z",
+      "updatedAt": "2025-01-01T12:00:00Z",
+      "formDataId": "uuid"
+    }
+  }
+  ```
+
+---
+
+## **Error Responses**
+
+If an error occurs, the backend will return a JSON response with an appropriate error message.
+
+### Example Error Response:
+```json
 {
   "message": "Query not found"
 }
+```
 
+---
 
-Common Errors:
+### **Common Errors**
+- **400 Bad Request**: Invalid request body.
+- **404 Not Found**: Query or form data does not exist.
+- **500 Internal Server Error**: General server error.
 
-400 Bad Request: When the request body is invalid.
-
-404 Not Found: When the query or form data does not exist.
-
-500 Internal Server Error: When something goes wrong on the server side.
 
 ## 5. Running and Testing the API
 
@@ -381,163 +355,206 @@ To update a query's status: PATCH /queries/:id
 To delete a query: DELETE /queries/:id
 
 
-# Instructions on how to set up backend and frontend
 
-## Setting up the Backend (API)
+# **Instructions on How to Set Up Backend and Frontend**
 
-Prerequisites: Make sure you have Docker and Docker Compose installed.
 
+## **Setting up the Backend (API)**
+
+**Prerequisites**:  
+Make sure you have Docker and Docker Compose installed.  
 You need Node.js and npm to be installed on your machine.
 
-### 1. Clone the Repository (if not already done)
+---
+
+### **1. Clone the Repository (if not already done)**
 
 If you haven’t already, clone the repository to your local machine:
 
+```bash
 git clone https://github.com/aileen0101/take-home-assignment-A.git
 cd take-home-assignment-A
+```
 
-### 2. Build Docker Containers
+---
+
+### **2. Build Docker Containers**
 
 Build the Docker containers by running the following command in the root of the backend project:
 
+```bash
 docker-compose build
+```
 
 Start the Docker containers (including your PostgreSQL database and the backend API):
 
+```bash
 docker-compose up
+```
 
 This will run both the backend API and PostgreSQL.
 
-You should now have both services running, with PostgreSQL running on port 5432 and the backend running on port 8080.
+You should now have both services running, with PostgreSQL running on port `5432` and the backend running on port `8080`.
 
-### 3. Running Migrations
+---
+
+### **3. Running Migrations**
 
 Run the Prisma migrations to create the database tables for your backend API:
 
+```bash
 docker exec -it vial-backend-api npx prisma migrate deploy
+```
+or
+```bash
+npm run migrate
+```
 
-### 4. Seeding the Database
+---
+
+### **4. Seeding the Database**
 
 To seed the database with initial data (form data and queries), run:
 
+```bash
 docker exec -it vial-backend-api npx prisma db seed
+```
+or
+```bash
+npm run seed
+```
 
-### 5. Test the Backend API (OPTIONAL)
+---
 
-Your backend API should now be running and listening on port 8080. You can test the endpoints using curl or Postman. Some example API tests:
+### **5. Test the Backend API (OPTIONAL)**
 
-GET form data:
+Your backend API should now be running and listening on port `8080`. You can test the endpoints using `curl` or Postman.  
 
-curl http://localhost:8080/form-data
+Some example API tests:
 
+- **GET Form Data**:
+  ```bash
+  curl http://localhost:8080/form-data
+  ```
 
-POST a new query (replace formDataId with a valid ID):
+- **POST a New Query** (replace `formDataId` with a valid ID):
+  ```bash
+  curl --location --request POST 'http://localhost:8080/queries' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "title": "Invalid dosage",
+    "description": "The dosage value seems incorrect. Please verify.",
+    "formDataId": "replace_with_formData_id"
+  }'
+  ```
 
-curl --location --request POST 'http://localhost:8080/queries' \
---header 'Content-Type: application/json' \
---data-raw '{
-  "title": "Invalid dosage",
-  "description": "The dosage value seems incorrect. Please verify.",
-  "formDataId": "replace_with_formData_id"
-}'
+- **PATCH (Resolve) an Existing Query** (replace `queryId` with an actual query ID):
+  ```bash
+  curl --location --request PATCH 'http://localhost:8080/queries/queryId' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "status": "RESOLVED"
+  }'
+  ```
 
+- **DELETE a Query** (replace `queryId` with an actual query ID):
+  ```bash
+  curl --location --request DELETE 'http://localhost:8080/queries/queryId'
+  ```
 
-PATCH (resolve) an existing query (replace queryId with an actual query ID):
+---
 
-curl --location --request PATCH 'http://localhost:8080/queries/queryId' \
---header 'Content-Type: application/json' \
---data-raw '{
-  "status": "RESOLVED"
-}'
+## **Setting up the Frontend (React App)**
 
+---
 
-DELETE a query (replace queryId with an actual query ID):
+### **1. Install Dependencies**
 
-curl --location --request DELETE 'http://localhost:8080/queries/queryId'
+Navigate to the frontend directory in your project:
 
-
-## Setting up the Frontend (React App)
-
-### 1. Install Dependencies
-
-Navigate to the frontend directory in your project.
+```bash
+cd frontend
+```
 
 Install the necessary dependencies using npm:
 
+```bash
 npm install
+```
 
 If you encounter issues with dependencies, you can install them manually:
 
+```bash
 npm install axios react-modal
+```
 
-### 2. Start the Frontend Application
+---
+
+### **2. Start the Frontend Application**
 
 To start the frontend, run:
 
+```bash
 npm start
+```
 
 This will:
 
-Start the React development server.
+- Start the React development server.
+- The app should now be running at `http://localhost:3000`.
 
-The app should now be running at http://localhost:3000.
+---
 
-## Frontend Features 
+## **Frontend Features**
 
-### 1. Display Form Data and Associated Queries
+### **1. Display Form Data and Associated Queries**
+- Form data is fetched from the backend API and displayed in a table format.
+- If no query exists, a button will allow the user to create a new query for that form data.
+- If a query exists, the query is shown with its status, and the user can click to view the details.
 
-Form data is fetched from the backend API and displayed in a table format.
+### **2. Create Query**
+- Clicking the “+ Add Query” button opens a modal to create a new query.
+- The new query is immediately updated on the frontend without requiring a reload.
 
-If no query exists, a button will allow the user to create a new query for that form data.
+### **3. Resolve Query**
+- If the query is unresolved (OPEN), a “Resolve Query” button appears.
+- Clicking Resolve updates the query's status to RESOLVED on both the frontend and backend.
 
-If a query exists, the query is shown with its status, and the user can click to view the details.
+### **4. View Query Details**
+- Clicking on an existing query opens a modal with the query details (title, status, description, etc.).
+- If the query is OPEN, the user can click “Resolve Query” to resolve it.
+- If the query is RESOLVED, it will show the resolved status and details.
 
-### 2. Create Query
+### **5. Delete Query**
+- If the query exists, a “Delete Query” button is shown in the query details modal.
+- Clicking Delete removes the query from the backend and updates the frontend immediately to reflect the change.
 
-Clicking the “+ Add Query” button opens a modal to create a new query.
+---
 
-The new query is immediately updated on the frontend without requiring a reload.
+## **Troubleshooting**
 
-### 3. Resolve Query
+---
 
-If the query is unresolved (OPEN), a “Resolve Query” button appears.
+### **Backend Database Not Connecting:**
+- Check if the Docker container for PostgreSQL is running properly.
+- Ensure the `DATABASE_URL` in the `.env` file is correct.
 
-Clicking Resolve updates the query's status to RESOLVED on both the frontend and backend.
+---
 
-### 4. View Query Details
+### **API Call Errors:**
+- Check if the backend API server is running and accessible at `http://localhost:8080`.
+- Make sure you have run the Prisma migrations to set up the database schema:
+  ```bash
+  npx prisma migrate deploy
+  ```
 
-Clicking on an existing query opens a modal with the query details (title, status, description, etc.).
+---
 
-If the query is OPEN, the user can click “Resolve Query” to resolve it.
-
-If the query is RESOLVED, it will show the resolved status and details.
-
-### 5. Delete Query
-
-If the query exists, a “Delete Query” button is shown in the query details modal.
-
-Clicking Delete removes the query from the backend and updates the frontend immediately to reflect the change.
-
-## Troubleshooting
-
-If you run into any issues while running the backend or frontend, here are some common solutions:
-
-### Backend Database Not Connecting:
-
-Check if the Docker container for PostgreSQL is running properly.
-
-Ensure the DATABASE_URL in the .env file is correct.
-
-### API Call Errors:
-
-Check if the backend API server is running and accessible at http://localhost:8080.
-
-Make sure you have run the Prisma migrations to set up the database schema (npx prisma migrate deploy).
-
-### Frontend Issues:
-
-Ensure all dependencies are correctly installed (npm install).
-
-If using react-modal, make sure it's initialized correctly and no JavaScript errors appear in the browser's console.
+### **Frontend Issues:**
+- Ensure all dependencies are correctly installed:
+  ```bash
+  npm install
+  ```
+- If using `react-modal`, make sure it's initialized correctly and no JavaScript errors appear in the browser's console.
 
 
