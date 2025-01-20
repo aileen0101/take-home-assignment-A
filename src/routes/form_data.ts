@@ -1,34 +1,40 @@
-import { FastifyInstance } from 'fastify'
-
-import prisma from '../db/db_client'
-import { serializer } from './middleware/pre_serializer'
-import { ICountedFormData } from './schemas/formData.interface'
-import { ApiError } from '../errors'
+import { FastifyInstance } from 'fastify';
+import prisma from '../db/db_client';
+import { ApiError } from '../errors';
+import { ICountedFormData } from './schemas/formData.interface';
 
 async function formDataRoutes(app: FastifyInstance) {
-  app.setReplySerializer(serializer)
-
-  const log = app.log.child({ component: 'formDataRoutes' })
-
-  app.get<{
-    Reply: ICountedFormData
-  }>('', {
+  app.get<{ Reply: ICountedFormData }>('/', {
     async handler(req, reply) {
-      log.debug('get form data')
       try {
         const formData = await prisma.formData.findMany({
-          include: { queries: true },
-        })
+          include: { query: true }, // Include the query relation
+        });
+
         reply.send({
           total: formData.length,
-          formData,
-        })
-      } catch (err: any) {
-        log.error({ err }, err.message)
-        throw new ApiError('failed to fetch form data', 400)
+          formData: formData.map((item) => ({
+            id: item.id,
+            question: item.question,
+            answer: item.answer,
+            query: item.query
+              ? {
+                  id: item.query.id,
+                  title: item.query.title,
+                  description: item.query.description,
+                  createdAt: item.query.createdAt,
+                  updatedAt: item.query.updatedAt,
+                  status: item.query.status as 'OPEN' | 'RESOLVED', // Cast the status
+                  formDataId: item.query.formDataId,
+                }
+              : null,
+          })),
+        });
+      } catch (err) {
+        throw new ApiError('Failed to fetch form data', 500);
       }
     },
-  })
+  });
 }
 
-export default formDataRoutes
+export default formDataRoutes;

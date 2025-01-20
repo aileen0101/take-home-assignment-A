@@ -9,21 +9,23 @@ datasource db {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model FormData {
-  id       String   @id @default(uuid()) // UUID for unique identifier
-  question String   @unique             // Unique constraint for question
+  id       String   @id @default(uuid())
+  question String   @unique
   answer   String
-  queries  Query[]
+  query    Query?   @relation("FormDataQuery") // Relation name
 }
 
 model Query {
-  id          String   @id @default(uuid()) // UUID for unique identifier
+  id          String   @id @default(uuid())
   title       String
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  status      String   @default("OPEN") // Values: OPEN or RESOLVED
-  formDataId  String                      // Foreign key to FormData
-  formData    FormData @relation(fields: [formDataId], references: [id])
+  status      String   @default("OPEN")
+  formData    FormData @relation("FormDataQuery", fields: [formDataId], references: [id]) // Relation fields
+  formDataId  String   @unique
 }
+
+
 
 

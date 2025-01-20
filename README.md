@@ -125,3 +125,11 @@ Some helpful links:
 ---
 
 We hope you have fun with the assignment and we look forward to hearing from you!
+
+---
+
+### Instructions on how to set up backend and frontend
+
+
+
+### API Documentation
